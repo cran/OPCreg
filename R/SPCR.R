@@ -11,7 +11,7 @@
 #' 
 #' @examples
 #' # Example data
-#' library(MASS);library(car);library(carData);library(stats);library(matrixcalc)
+#' library(MASS);library(stats)
 #' set.seed(1234)
 #' n <- 2000
 #' p <- 10
@@ -29,8 +29,6 @@
 #' y <- cbind(en, x) %*% B + e
 #' colnames(y) <- paste("y")
 #' data <- data.frame(cbind(y, x))
-#'
-#' # Call the SPCR function
 #' result <- SPCR(data,  eta = 0.0035, m = 3)
 #' @export
 SPCR <- function(data, eta, m) {

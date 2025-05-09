@@ -31,4 +31,5 @@ D=as.matrix(diag(rep(runif(p,0,1))))
 epsilon=matrix(mvrnorm(n,rep(0,p),D),nrow=n)
 data=mu+F\%*\%t(A)+epsilon
 IPC(data=data,m=m,eta=0.8) 
+
 }

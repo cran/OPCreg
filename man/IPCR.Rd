@@ -37,6 +37,7 @@ The IPCR function performs the following steps:
 This method is particularly useful for datasets where new observations are continuously added, and the model needs to be updated incrementally.
 }
 \examples{
+\dontrun{
 set.seed(1234)
 library(MASS)
 n <- 2000
@@ -55,7 +56,14 @@ en <- matrix(rep(1, n * 1), ncol = 1)
 y <- cbind(en, x) \%*\% B + e
 colnames(y) <- paste("y")
 data <- data.frame(cbind(y, x))
-IPCR(data = data, m = 3, eta = 0.0035, alpha = 0.05)
+
+result <- IPCR(data = data, m = 3, eta = 0.0035, alpha = 0.05)
+print(result$Bhat)
+print(result$yhat)
+print(result$RMSE)
+print(result$summary)
+}
+
 }
 \seealso{
 \code{\link{lm}}: For fitting linear models.

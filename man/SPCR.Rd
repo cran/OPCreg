@@ -2,91 +2,46 @@
 % Please edit documentation in R/SPCR.R
 \name{SPCR}
 \alias{SPCR}
-\title{Stochastic Principal Component Regression}
+\title{The stochastic principal component method can handle online data sets.}
 \usage{
 SPCR(data, eta, m)
 }
 \arguments{
 \item{data}{A data frame containing the response variable and predictors.}
-\item{eta}{A proportion (between 0 and 1) determining the initial sample size for PCA.}
+
+\item{eta}{proportion (between 0 and 1) determining the initial sample size for PCA.}
+
 \item{m}{The number of principal components to retain.}
 }
 \value{
-A list containing the following components:
-\item{Bhat}{Estimated regression coefficients in the original space.}
-\item{RMSE}{Root Mean Squared Error of the regression model.}
-\item{summary}{Summary of the linear regression model.}
-\item{Vhat}{Estimated principal components.}
-\item{lambdahat}{Estimated eigenvalues.}
-\item{time}{Computation time of the function.}
-\item{yhat}{Predicted values from the regression model.}
+A list containing the following elements:
+\item{Bhat}{The estimated regression coefficients, including the intercept.}
+\item{RMSE}{The Root Mean Square Error of the regression model.}
+\item{summary}{The summary of the linear regression model.}
+\item{yhat}{The predicted values of the response variable.}
 }
 \description{
-The Stochastic Principal Component Regression (SPCR) function performs principal component regression
-on an online dataset using a stochastic update rule. It is designed to handle large datasets efficiently
-by incrementally updating the principal components as new data arrives.
+The stochastic principal component method can handle online data sets.
 }
-\details{
-The function first standardizes the predictors, then performs PCA on an initial subset of the data.
-It iteratively updates the principal components using a stochastic approximation method.
-Finally, it fits a linear regression model using the principal components as predictors and transforms
-the coefficients back to the original space.
-}
-\examples{ 
-# Load necessary libraries
-library(MASS)
-library(Matrix)
-library(car)
-# Set seed for reproducibility
+\examples{
+# Example data
+library(MASS);library(stats)
 set.seed(1234)
-
-# Define sample size and number of variables
-n = 2000
-p = 10
-# Mean vector
-mu0 = runif(p, 0)
-
-# Method 1: Generate a positive-definite matrix using the Wishart distribution
-Sigma0 = rWishart(1, df = p, Sigma = diag(p))[,,1]
-
-# Method 2: Manually construct a positive-definite matrix
-# A = matrix(rnorm(p^2), nrow = p)
-# Sigma0 = A %*% t(A) + diag(p) * 10
-
-# Method 3: Adjust an existing matrix to be positive-definite
-# Sigma0 = nearPD(Sigma0)$mat
-
-# Generate multivariate normal data
-x = mvrnorm(n, mu0, Sigma0)
-colnames(x)<-paste("x",1:p,sep="")
-e=rnorm(n,0,1)
-B = sample(1:3,(p+1),replace = TRUE) 
-en<-matrix(rep(1,n*1),ncol=1)
-y=cbind(en,x)%*%B+e
-colnames(y)<-paste("y", 1:ncol(y), sep="")
-data<-data.frame(cbind(y,x))
-#lm.sol<-lm(y~.,data=data)
-#summary(lm.sol)
-#VIF<-mean(vif(lm.sol));VIF
-
-X<-scale(data[,-1])
-p<-ncol(X)
-n<-nrow(X)
-s=Sys.time()
-S<-cov(X)
-eig<-eigen(S)
-diag_S<-diag(S)
-sum_rank<-sum(diag_S)
-m=0
-if (m==0){
-eig<-eigen(S)
-sum_eig<-sum(diag(S))
-for (i in 1:p){
-if (sum(eig$values[1:i])/sum_eig>0.9){
-m<-i;break
-}
-}
-}
-# Example usage of SPCR function
-SPCR(data, eta = 0.0035, m = 3)
+n <- 2000
+p <- 10
+mu0 <- as.matrix(runif(p, 0))
+sigma0 <- as.matrix(runif(p, 0, 10))
+ro <- as.matrix(c(runif(round(p / 2), -1, -0.8), runif(p - round(p / 2), 0.8, 1)))
+R0 <- ro \%*\% t(ro)
+diag(R0) <- 1
+Sigma0 <- sigma0 \%*\% t(sigma0) * R0
+x <- mvrnorm(n, mu0, Sigma0)
+colnames(x) <- paste("x", 1:p, sep = "")
+e <- rnorm(n, 0, 1)
+B <- sample(1:3, (p + 1), replace = TRUE)
+en <- matrix(rep(1, n * 1), ncol = 1)
+y <- cbind(en, x) \%*\% B + e
+colnames(y) <- paste("y")
+data <- data.frame(cbind(y, x))
+result <- SPCR(data,  eta = 0.0035, m = 3)
 }

@@ -11,29 +11,29 @@
 #' @examples
 #' 
 #' library(MASS)
-#' n=2000;p=20;m=9;
-#' mu=t(matrix(rep(runif(p,0,1000),n),p,n))     
-#' mu0=as.matrix(runif(m,0))
-#' sigma0=diag(runif(m,1))
-#'ro=as.matrix(c(runif(round(p/2),-1,-0.8),runif(p-round(p/2),0.8,1)))
-#'R0=ro%*%t(ro);diag(R0)=1    
-#'Sigma0=sigma0%*%t(sigma0)*R0 
-#'x=mvrnorm(n,mu0,Sigma0)  
-#'colnames(x)<-paste("x",1:p,sep="")
-#'e=rnorm(n,0,1)
-#'B=sample(1:3,(p+1),replace=T)
-#'en<-matrix(rep(1,n*1),ncol=1)
-#'y=cbind(en,x)%*%B+e
-#'colnames(y)<-paste("y")
-#'data<-data.frame(cbind(y,x))
-#' spcrl(data=data,m=m,eta=0.8,alpha=0.5)
+#' n <- 2000
+#' p <- 20
+#' m <- 9
+#' mu <- t(matrix(rep(runif(p, 0, 1000), p, n)))
+#' mu0 <- as.matrix(runif(p, 0))  
+#' sigma0 <- diag(runif(p, 1, 10)) 
+#' ro <- as.matrix(c(runif(round(p/2), -1, -0.8), runif(p - round(p/2), 0.8, 1)))
+#' R0 <- ro %*% t(ro)
+#' diag(R0) <- 1
+#' Sigma0 <- sigma0 %*% R0 %*% sigma0 
+#' x <- mvrnorm(n, mu0, Sigma0)
+#' colnames(x) <- paste0("x", 1:p)
+#' e <- rnorm(n, 0, 1)
+#' B <- sample(1:3, (p + 1), replace = TRUE)
+#' en <- matrix(rep(1, n), ncol = 1)
+#' y <- cbind(en, x) %*% B + e
+#' colnames(y) <- "y"
+#' data <- data.frame(cbind(y, x))
+#' spcrl(data = data, m = m, eta = 0.8, alpha = 0.5)
 #' 
 #' @importFrom stats reformulate
 #' @importFrom stats sd
 #' 
-#' 
-#' 
-
 
 spcrl <- function(data, m, eta, alpha) {
   # Check if eta is within the valid range

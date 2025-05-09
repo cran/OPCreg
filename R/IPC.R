@@ -5,7 +5,8 @@
 #' @param eta is the proportion of online data to total data
 #'
 #' @return T2,T2k,V,Vhat,lambdahat,time
-#'
+#' @export
+#' 
 #' @examples
 #' library(MASS)
 #' n=2000;p=20;m=9;
@@ -18,7 +19,9 @@
 #' epsilon=matrix(mvrnorm(n,rep(0,p),D),nrow=n)
 #' data=mu+F%*%t(A)+epsilon
 #' IPC(data=data,m=m,eta=0.8) 
-#' @export
+#' 
+#' @importFrom Matrix t
+#' 
 IPC<-function(data,m,eta){
 X<-scale(data)
 S<-cov(X)   

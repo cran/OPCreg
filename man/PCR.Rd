@@ -9,7 +9,7 @@ PCR(data, threshold)
 \arguments{
 \item{data}{A data frame where the first column is the response variable and the remaining columns are predictor variables.}
 
-\item{threshold}{The proportion of variance to retain in the principal components (default is 0.8).}
+\item{threshold}{The proportion of variance to retain in the principal components (default is 0.95).}
 }
 \value{
 A list containing the following elements:
@@ -34,14 +34,14 @@ The function performs the following steps:
 7. Back-transform the regression coefficients to the original scale.
 }
 \examples{
+\dontrun{
 # Example data
-library(MASS)
 set.seed(1234)
 n <- 2000
-p <- 30
+p <- 10
 mu0 <- as.matrix(runif(p, 0))
 sigma0 <- as.matrix(runif(p, 0, 10))
-ro <- matrix(c(runif(round(p / 2), -1, -0.8), runif(p - round(p / 2), 0.8, 1)))
+ro <- as.matrix(c(runif(round(p / 2), -1, -0.8), runif(p - round(p / 2), 0.8, 1)))
 R0 <- ro \%*\% t(ro)
 diag(R0) <- 1
 Sigma0 <- sigma0 \%*\% t(sigma0) * R0
@@ -53,8 +53,23 @@ en <- matrix(rep(1, n * 1), ncol = 1)
 y <- cbind(en, x) \%*\% B + e
 colnames(y) <- paste("y")
 data <- data.frame(cbind(y, x))
+
 # Call the PCR function
-PCR(data, threshold = 0.9)
+result <- PCR(data, threshold = 0.9)
+
+# Access the estimated regression coefficients
+print(Bhat <- result$Bhat)
+
+# Access the predicted values
+print(yhat <- result$yhat)
+
+# Print the summary of the regression model
+print(result$summary)
+
+# Print the RMSE
+print(paste("RMSE:", result$RMSE))
+}
+
 }
 \seealso{
 \code{\link{lm}}: For fitting linear models.

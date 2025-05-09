@@ -22,38 +22,26 @@ T2,T2k,V,Vhat,lambdahat,time
 The stochastic principal  component  regression with varying learning-rate can handle online data sets.
 }
 \examples{
-# Load necessary libraries
+
 library(MASS)
-library(Matrix)
-library(car)
-# Set seed for reproducibility
-set.seed(1234)
+n <- 2000
+p <- 20
+m <- 9
+mu <- t(matrix(rep(runif(p, 0, 1000), p, n)))
+mu0 <- as.matrix(runif(p, 0))  
+sigma0 <- diag(runif(p, 1, 10)) 
+ro <- as.matrix(c(runif(round(p/2), -1, -0.8), runif(p - round(p/2), 0.8, 1)))
+R0 <- ro \%*\% t(ro)
+diag(R0) <- 1
+Sigma0 <- sigma0 \%*\% R0 \%*\% sigma0 
+x <- mvrnorm(n, mu0, Sigma0)
+colnames(x) <- paste0("x", 1:p)
+e <- rnorm(n, 0, 1)
+B <- sample(1:3, (p + 1), replace = TRUE)
+en <- matrix(rep(1, n), ncol = 1)
+y <- cbind(en, x) \%*\% B + e
+colnames(y) <- "y"
+data <- data.frame(cbind(y, x))
+spcrl(data = data, m = m, eta = 0.8, alpha = 0.5)
 
-# Define sample size, number of variables and number of principal component
-n = 2000
-p = 10
-m=9
-# Mean vector
-mu0 = runif(p, 0)
-
-# Method 1: Generate a positive-definite matrix using the Wishart distribution
-Sigma0 = rWishart(1, df = p, Sigma = diag(p))[,,1]
-
-# Method 2: Manually construct a positive-definite matrix
-# A = matrix(rnorm(p^2), nrow = p)
-# Sigma0 = A %*% t(A) + diag(p) * 10
-
-# Method 3: Adjust an existing matrix to be positive-definite
-# Sigma0 = nearPD(Sigma0)$mat
-
-# Generate multivariate normal data
-x = mvrnorm(n, mu0, Sigma0)
-colnames(x)<-paste("x",1:p,sep="")
-e=rnorm(n,0,1)
-B = sample(1:3,(p+1),replace = TRUE) 
-en<-matrix(rep(1,n*1),ncol=1)
-y=cbind(en,x)%*%B+e
-colnames(y)<-paste("y", 1:ncol(y), sep="")
-data<-data.frame(cbind(y,x))
-spcrl(data=data,m=m,eta=0.8,alpha=0.5)
 }

@@ -36,8 +36,9 @@ It iteratively updates the principal components by incorporating new observation
 Finally, it fits a linear regression model using the principal components as predictors and transforms the coefficients back to the original space.
 }
 \examples{
+\dontrun{
+# Example data
 set.seed(1234)
-library(MASS)
 n <- 2000
 p <- 10
 mu0 <- as.matrix(runif(p, 0))
@@ -54,7 +55,16 @@ en <- matrix(rep(1, n * 1), ncol = 1)
 y <- cbind(en, x) \%*\% B + e
 colnames(y) <- paste("y")
 data <- data.frame(cbind(y, x))
-PPCR(data, eta = 0.0035, m = 3, alpha = 0.05, perturbation_factor = 0.1)
+
+# Call the PPCR function
+result <- PPCR(data, eta = 0.0035, m = 3, alpha = 0.05, perturbation_factor = 0.1)
+
+# Print results
+print(result$Bhat)  # Estimated regression coefficients
+print(result$RMSE)  # RMSE of the model
+print(result$summary)  # Summary of the regression model
+}
+
 }
 \seealso{
 \code{\link{lm}}: For linear regression models.

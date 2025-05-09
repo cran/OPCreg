@@ -1,23 +1,25 @@
 Package: OPCreg
 Title: Online Principal Component Regression for Online Datasets
-Date: 2025-04-03
-Version: 0.2.0
+Date: 2025-05-08
+Version: 0.3.0
 Authors@R: c(person("Guangbao", "Guo", role = c("aut", "cre"),
                      email = "ggb11111111@163.com",
                  comment = c(ORCID="0000-0002-4115-6218")),
                      person("Chunjie", "Wei", role = "aut"))
 Description: The online principal component regression method can process the online data set. 'OPCreg' implements the online principal component regression method, which is specifically designed to process online datasets efficiently. This method is particularly useful for handling large-scale, streaming data where traditional batch processing methods may be computationally infeasible.The philosophy of the package is described in 'Guo' (2025) <doi:10.1016/j.physa.2024.130308>.
 RoxygenNote: 7.3.2
-Imports: MASS, stats, Matrix, car
+Imports: MASS, stats, Matrix
 Suggests: testthat (>= 3.0.0)
 Config/testthat/edition: 3
+LazyData: true
 NeedsCompilation: no
-Packaged: 2025-04-23 11:01:30 UTC; Administrator
-Author: Guangbao Guo [aut, cre] (<https://orcid.org/0000-0002-4115-6218>),
+Packaged: 2025-05-08 13:18:07 UTC; R7000
+Author: Guangbao Guo [aut, cre] (ORCID:
+    <https://orcid.org/0000-0002-4115-6218>),
   Chunjie Wei [aut]
 Maintainer: Guangbao Guo <ggb11111111@163.com>
 Depends: R (>= 3.5.0)
 Repository: CRAN
-Date/Publication: 2025-04-24 17:50:03 UTC
+Date/Publication: 2025-05-09 02:30:02 UTC
 Encoding: UTF-8
 License: GPL-3

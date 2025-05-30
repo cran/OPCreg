@@ -1,4 +1,4 @@
-2ca3fb670c5d1124bfbcce3d6330cbb6 *DESCRIPTION
+f87b4f424397e9dda94dc1ca72a6c4b6 *DESCRIPTION
 ec96bba259f1de2d76d93fa384e25172 *NAMESPACE
 1b25ea39a4f6bb103e3b9bd15e680a37 *R/IPC.R
 bbe6d464ea566862b7f56ff8134d374a *R/IPCR.R
@@ -10,7 +10,7 @@ bbe6d464ea566862b7f56ff8134d374a *R/IPCR.R
 7a99308ac5eba27844ccc956cf66c2eb *R/data.R
 c864c8937909be718220653c4d80fb5e *R/spcrl.R
 bf057d353f558c23b0e600be0ec9fb69 *data/concrete.rda
-96d7554a9ff0ebc21fe9423d3a56b1ea *data/protein.rda
+6e19e6e6e8b429624d11862bc71789ac *data/protein.rda
 5ea8cdf255fd78b8a5ee5b13fb8d9d53 *data/yacht_hydrodynamics.rda
 03d6c0312a11f2bd33dd442e84ca3869 *man/IPC.Rd
 9c4d8eccf23370ec52f955e54a6eaf1f *man/IPCR.Rd
